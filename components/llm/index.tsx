@@ -2,7 +2,7 @@
 
 import { llmResultAtom, madlibAtom, madlibReadyAtom } from '@/jotai/store';
 import { fetchOpenAi } from '@/server-actions';
-import { Box, Button, Flex, Spinner, Text } from '@radix-ui/themes';
+import { Button, Flex, Spinner, Text } from '@radix-ui/themes';
 import { useAtom, useAtomValue } from 'jotai';
 import { useState } from 'react';
 import { Letter } from './letter';
@@ -46,23 +46,10 @@ export const LLM = () => {
             {isLoading && <Spinner loading />}
             Submit
           </Button>
-          {llmResult && (
-            <Box
-              p="4"
-              style={{
-                backgroundColor: 'var(--gray-a2)',
-                borderRadius: 'var(--radius-3)',
-                boxShadow: 'var(--shadow-4)',
-              }}
-              width="600"
-            >
-              <Text>{llmResult}</Text>
-            </Box>
-          )}
           {error && <Text color="red">Something went wrong</Text>}
         </Flex>
       )}
-      <Letter />
+      {llmResult && <Letter />}
     </>
   );
 };
