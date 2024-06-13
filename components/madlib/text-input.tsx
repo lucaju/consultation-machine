@@ -12,6 +12,7 @@ export const TextInput = ({ name, onChange, style, ...props }: TextField.RootPro
 
   return (
     <TextField.Root
+      name={name}
       onChange={(event) => {
         setMadlib((prev) => prev.with(index, { ...item, value: event.target.value }));
         onChange?.(event);

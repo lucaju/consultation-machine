@@ -26,7 +26,6 @@ export const SelectInput = ({ name, onValueChange, options, ...props }: Props) =
       <Select.Trigger style={{ margin: 4 }} variant="soft" />
       <Select.Content variant="soft">
         <Select.Group>
-          <Select.Label>{name}</Select.Label>
           {options.map((option) => (
             <Select.Item key={option} value={option}>
               {option}

@@ -49,7 +49,7 @@ export const Form = () => {
               options={item.options}
             />
           ) : (
-            <Text key={item.id}>{item.value}</Text>
+            <Text size="4" key={item.id} style={{lineHeight: 2}}>{item.value}</Text>
           ),
         )}
       </Box>
