@@ -1,11 +1,9 @@
-'use client';
-
 import { Flex, Heading } from '@radix-ui/themes';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { LanguageSelector } from './language-selector';
 
-export const Topbar = async () => {
+export const Topbar = () => {
   const t = useTranslations();
   return (
     <Flex direction="column" gap="2" align="center" py="5">
