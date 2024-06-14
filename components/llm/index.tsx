@@ -4,10 +4,12 @@ import { llmResultAtom, madlibAtom, madlibReadyAtom } from '@/jotai/store';
 import { fetchOpenAi } from '@/server-actions';
 import { Button, Flex, Spinner, Text } from '@radix-ui/themes';
 import { useAtom, useAtomValue } from 'jotai';
+import { useTranslations } from 'next-intl';
 import { MouseEventHandler, useState } from 'react';
 import { Letter } from './letter';
 
 export const LLM = () => {
+  const t = useTranslations();
   const madlib = useAtomValue(madlibAtom);
   const madlibReady = useAtomValue(madlibReadyAtom);
   const [llmResult, setLlmResult] = useAtom(llmResultAtom);
@@ -59,7 +61,7 @@ export const LLM = () => {
       {madlibReady && (
         <Flex direction="column" gap="2" align="center">
           <Button
-            color={isHover ? 'green' : 'blue'}
+            color={isHover ? 'plum' : 'iris'}
             disabled={isLoading}
             onClick={handleSubmiit}
             onMouseMove={(event) => {
@@ -68,9 +70,9 @@ export const LLM = () => {
             onMouseOut={() => setIsHover(false)}
           >
             {isLoading && <Spinner loading />}
-            Submit
+            {t('project.create letter')}
           </Button>
-          {error && <Text color="red">Something went wrong</Text>}
+          {error && <Text color="red">{t('project.something went wrong')}</Text>}
         </Flex>
       )}
       {llmResult && <Letter />}

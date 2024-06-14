@@ -1,16 +1,8 @@
-import { LLM } from '@/components/llm';
-import { Madlib } from '@/components/madlib';
-import { Topbar } from '@/components/topbar';
-import { Container, Flex } from '@radix-ui/themes';
+import { redirect } from './navigation';
 
-export default async function Home() {
-  return (
-    <Container size="2">
-      <Flex direction="column" gap="7" align="center">
-        <Topbar />
-        <Madlib />
-        <LLM />
-      </Flex>
-    </Container>
-  );
+export const dynamic = 'force-dynamic';
+
+// This page only renders when the app is built statically (output: 'export')
+export default function RootPage() {
+  redirect('/en');
 }

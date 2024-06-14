@@ -6,8 +6,10 @@ import { motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import { SelectInput } from './select-input';
 import { TextInput } from './text-input';
+import { useTranslations } from 'next-intl';
 
 export const Form = () => {
+  const t = useTranslations();
   const [madlib, setMadlib] = useAtom(madlibAtom);
   const [madlibReady, setMadlibReady] = useAtom(madlibReadyAtom);
 
@@ -79,11 +81,11 @@ export const Form = () => {
           </Box>
 
           <Flex direction="column" m="4" width="600" align="center">
-            <Button type="submit">Generate Madlib</Button>
+            <Button type="submit">{t('project.create prompt')}</Button>
           </Flex>
         </form>
       </motion.div>
-      {madlibReady && <Button onClick={() => setMadlibReady(false)}>Back</Button>}
+      {madlibReady && <Button onClick={() => setMadlibReady(false)}>{t('project.back')}</Button>}
     </>
   );
 };

@@ -10,7 +10,6 @@ export const Letter = () => {
   const madlib = useAtomValue(madlibAtom);
 
   const name = madlib.find((item) => item.id === 'person_name')?.value || 'Anonymous';
-
   const today = format(new Date(), 'MMM dd, yyyy');
 
   const parseText = llmResult
