@@ -26,7 +26,10 @@ export const Result = () => {
                 {item.value}
               </Heading>
             ) : item.type === 'text' ? (
-              <Text key={item.id}>{item.value}</Text>
+              <Text key={item.id}>
+                {madlib[index - 1].value.endsWith('.') ? ' ' : ''}
+                {item.value.trim()}
+              </Text>
             ) : (
               <Text key={item.id} style={{ fontWeight: 'bold' }}>
                 {madlib[index - 1].value.endsWith(' ') ? '' : ' '}

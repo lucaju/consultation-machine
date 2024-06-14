@@ -53,7 +53,7 @@ export const Form = () => {
             }}
             width="600"
           >
-            {madlib.map((item) =>
+            {madlib.map((item, index) =>
               item.type === 'input' ? (
                 <TextInput
                   key={item.id}
@@ -80,7 +80,15 @@ export const Form = () => {
                   {item.value}
                 </Heading>
               ) : (
-                <Text key={item.id} id={item.id} size="3" style={{ lineHeight: 2.5 }}>
+                <Text
+                  key={item.id}
+                  id={item.id}
+                  size="3"
+                  style={{
+                    paddingLeft: madlib[index - 1].value.endsWith('.') ? 4 : 0,
+                    lineHeight: 2.5,
+                  }}
+                >
                   {item.value}
                 </Text>
               ),
