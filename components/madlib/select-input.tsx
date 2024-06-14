@@ -5,13 +5,14 @@ import { Select } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
 
 interface Props extends Select.RootProps {
+  id: string;
   options: string[];
 }
 
-export const SelectInput = ({ name, onValueChange, options, ...props }: Props) => {
+export const SelectInput = ({ id, name, onValueChange, options, ...props }: Props) => {
   const [madlib, setMadlib] = useAtom(madlibAtom);
 
-  const item = madlib.find((item) => item.id === name)!;
+  const item = madlib.find((item) => item.id === id)!;
   const index = madlib.indexOf(item);
 
   return (
@@ -23,7 +24,7 @@ export const SelectInput = ({ name, onValueChange, options, ...props }: Props) =
       }}
       {...props}
     >
-      <Select.Trigger style={{ margin: 4 }} variant="soft" />
+      <Select.Trigger id={id} style={{ marginInline: 4, marginTop: 4 }} variant="soft" />
       <Select.Content variant="soft">
         <Select.Group>
           {options.map((option) => (

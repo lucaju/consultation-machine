@@ -4,7 +4,7 @@ import { llmResultAtom, madlibAtom, madlibReadyAtom } from '@/jotai/store';
 import { fetchOpenAi } from '@/server-actions';
 import { Button, Flex, Spinner, Text } from '@radix-ui/themes';
 import { useAtom, useAtomValue } from 'jotai';
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { Letter } from './letter';
 
 export const LLM = () => {
@@ -13,18 +13,34 @@ export const LLM = () => {
   const [llmResult, setLlmResult] = useAtom(llmResultAtom);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isHover, setIsHover] = useState(false);
 
-  const handleSubmiit = async () => {
+  const handleSubmiit: MouseEventHandler<HTMLButtonElement> = async (event) => {
     setIsLoading(true);
     setError(false);
 
-    const prompt = madlib
-      .filter((item, index) => index > 1)
-      .map((item) => item.value)
-      .join(' ');
-    console.log(prompt);
+    const model = event.shiftKey ? 'gpt-4o' : 'gpt-3.5-turbo';
 
-    const response = await fetchOpenAi(prompt);
+    const prompt = madlib
+      .filter((item) => {
+        if (item.type === 'input' && item.name === 'person_name') return false;
+        return true;
+      })
+      .map((item, index, madlib) => {
+        if (item.type === 'text') return item.value.trim();
+        if (item.type === 'heading') {
+          return ` ${item.value.trim()}. `;
+        }
+
+        let string = '';
+        string += madlib[index - 1].value.endsWith(' ') ? '' : ' ';
+        string += item.value.trim();
+        string += madlib[index + 1].value.startsWith('.') ? '' : ' ';
+        return string;
+      })
+      .join('');
+
+    const response = await fetchOpenAi(prompt, model);
     setIsLoading(false);
 
     if (!response) {
@@ -32,7 +48,7 @@ export const LLM = () => {
       return;
     }
 
-    console.log(response);
+    // console.log(response);
 
     const content = response.choices[0].message.content;
     setLlmResult(content);
@@ -42,7 +58,15 @@ export const LLM = () => {
     <>
       {madlibReady && (
         <Flex direction="column" gap="2" align="center">
-          <Button disabled={isLoading} onClick={handleSubmiit}>
+          <Button
+            color={isHover ? 'green' : 'blue'}
+            disabled={isLoading}
+            onClick={handleSubmiit}
+            onMouseMove={(event) => {
+              if (event.shiftKey) setIsHover(true);
+            }}
+            onMouseOut={() => setIsHover(false)}
+          >
             {isLoading && <Spinner loading />}
             Submit
           </Button>

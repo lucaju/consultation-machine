@@ -1,7 +1,7 @@
 'use client';
 
 import { madlibAtom, madlibReadyAtom } from '@/jotai/store';
-import { Box, Flex, Text } from '@radix-ui/themes';
+import { Box, Flex, Heading, Text } from '@radix-ui/themes';
 import { useAtomValue } from 'jotai';
 
 export const Result = () => {
@@ -20,12 +20,18 @@ export const Result = () => {
           }}
           width="600"
         >
-          {madlib.map((item) =>
-            item.type === 'text' ? (
+          {madlib.map((item, index) =>
+            item.type === 'heading' ? (
+              <Heading key={item.id} as="h6" size="4" style={{ marginTop: 12 }}>
+                {item.value}
+              </Heading>
+            ) : item.type === 'text' ? (
               <Text key={item.id}>{item.value}</Text>
             ) : (
-              <Text key={item.id} style={{ fontWeight: 'bold', marginInline: 4 }}>
-                {item.value}
+              <Text key={item.id} style={{ fontWeight: 'bold' }}>
+                {madlib[index - 1].value.endsWith(' ') ? '' : ' '}
+                {item.value.trim()}
+                {madlib[index + 1].value.startsWith('.') ? '' : ' '}
               </Text>
             ),
           )}

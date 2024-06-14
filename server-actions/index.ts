@@ -5,10 +5,12 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const fetchOpenAi = async (prompt: string) => {
+type Model = 'gpt-3.5-turbo' | 'gpt-4o';
+
+export const fetchOpenAi = async (prompt: string, model: Model = 'gpt-3.5-turbo') => {
   const chatCompletion = await openai.chat.completions
     .create({
-      model: 'gpt-3.5-turbo',
+      model,
       max_tokens: 500,
       messages: [
         {
