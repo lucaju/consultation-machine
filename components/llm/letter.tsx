@@ -1,13 +1,17 @@
 'use client';
 
 import { llmResultAtom, madlibAtom } from '@/jotai/store';
-import { Box, Section, Text } from '@radix-ui/themes';
+import { Box, Button, Section, Text } from '@radix-ui/themes';
 import { format } from 'date-fns';
 import { useAtomValue } from 'jotai';
+import { useCallback, useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 
 export const Letter = () => {
   const llmResult = useAtomValue(llmResultAtom);
   const madlib = useAtomValue(madlibAtom);
+
+  const componentRef = useRef(null);
 
   const personNameItem = madlib.find((item) => 'name' in item && item.name === 'person_name');
   const personName = personNameItem?.value ?? 'Anonymous';
@@ -19,8 +23,23 @@ export const Letter = () => {
     .replaceAll(/\[[^\]]*\]/g, '')
     .split('\n');
 
+  const reactToPrintContent = useCallback(() => {
+    return componentRef.current;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [componentRef.current]);
+
+  const handlePrint = useReactToPrint({
+    content: reactToPrintContent,
+    documentTitle: 'AwesomeFileName',
+    // onBeforeGetContent: handleOnBeforeGetContent,
+    // onBeforePrint: handleBeforePrint,
+    // onAfterPrint: handleAfterPrint,
+    removeAfterPrint: true,
+  });
+
   return (
     <Box
+      ref={componentRef}
       p="5"
       px="9"
       style={{
@@ -32,6 +51,7 @@ export const Letter = () => {
       }}
       minWidth="600"
     >
+      <Button onClick={handlePrint}>print</Button>
       <Section py="3" style={{ width: 330 }}>
         <Text as="p" style={{ marginBottom: 16 }}>
           {personName}
