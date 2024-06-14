@@ -9,7 +9,9 @@ export const Letter = () => {
   const llmResult = useAtomValue(llmResultAtom);
   const madlib = useAtomValue(madlibAtom);
 
-  const name = madlib.find((item) => item.id === 'person_name')?.value || 'Anonymous';
+  const personNameItem = madlib.find((item) => 'name' in item && item.name === 'person_name');
+  const personName = personNameItem?.value ?? 'Anonymous';
+
   const today = format(new Date(), 'MMM dd, yyyy');
 
   const parseText = llmResult
@@ -32,7 +34,7 @@ export const Letter = () => {
     >
       <Section py="3" style={{ width: 330 }}>
         <Text as="p" style={{ marginBottom: 16 }}>
-          {name}
+          {personName}
         </Text>
         <Text as="p" weight="bold" style={{ marginBottom: 16 }}>
           BUSINESS CONFIDENTIAL
@@ -54,16 +56,13 @@ export const Letter = () => {
       </Section>
 
       <Section py="3">
-        {/* <Text as="p" style={{ marginBottom: 16 }}>
-          Mr. Lightbound:
-        </Text> */}
         {parseText?.map((item, index) => (
           <Text as="p" key={index} style={{ marginBottom: 16 }}>
             {item}
           </Text>
         ))}
         <Text as="p" style={{ marginBottom: 16 }}>
-          {name}
+          {personName}
         </Text>
       </Section>
     </Box>
