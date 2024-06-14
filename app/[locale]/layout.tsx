@@ -5,7 +5,16 @@ import { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { ThemeProvider } from 'next-themes';
+import { Libre_Caslon_Text } from 'next/font/google';
+import '../globals.css';
 import { JotaiProvider } from './jotai-provider';
+
+const Libre_Caslon = Libre_Caslon_Text({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-libre-caslon',
+  weight: '400',
+});
 
 interface Props extends React.PropsWithChildren {
   params: {
@@ -26,7 +35,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
   const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale} suppressHydrationWarning={true}>
+    <html className={Libre_Caslon.className} lang={locale} suppressHydrationWarning={true}>
       <body>
         <JotaiProvider>
           <NextIntlClientProvider messages={messages}>
