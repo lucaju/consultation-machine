@@ -2,11 +2,11 @@
   "project": {
     "English": "Anglais",
     "French": "Français",
-    "back": "Dos",
+    "back": "retour",
     "by": "par",
     "create letter": "Créer une lettre",
     "create prompt": "Créer une invite",
-    "something went wrong": "Quelque chose s'est mal passé",
+    "something went wrong": "Quelque chose n'a pas fonctionné",
     "title": "Appareil de consultation"
   }
 }
