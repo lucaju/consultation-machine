@@ -10,9 +10,11 @@ import { Letter } from './letter';
 
 export const LLM = () => {
   const t = useTranslations();
+
+  const [llmResult, setLlmResult] = useAtom(llmResultAtom);
   const madlib = useAtomValue(madlibAtom);
   const madlibReady = useAtomValue(madlibReadyAtom);
-  const [llmResult, setLlmResult] = useAtom(llmResultAtom);
+
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isHover, setIsHover] = useState(false);

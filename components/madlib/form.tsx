@@ -1,15 +1,17 @@
 'use client';
 
-import { madlibAtom, madlibReadyAtom } from '@/jotai/store';
+import { llmResultAtom, madlibAtom, madlibReadyAtom } from '@/jotai/store';
 import { Box, Button, Flex, Heading, Text } from '@radix-ui/themes';
 import { motion } from 'framer-motion';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
+import { useTranslations } from 'next-intl';
 import { SelectInput } from './select-input';
 import { TextInput } from './text-input';
-import { useTranslations } from 'next-intl';
 
 export const Form = () => {
   const t = useTranslations();
+
+  const setLlmResult = useSetAtom(llmResultAtom);
   const [madlib, setMadlib] = useAtom(madlibAtom);
   const [madlibReady, setMadlibReady] = useAtom(madlibReadyAtom);
 
@@ -27,6 +29,11 @@ export const Form = () => {
     });
 
     setMadlibReady(true);
+  };
+
+  const handleReset = () => {
+    setMadlibReady(false);
+    setLlmResult(null);
   };
 
   return (
@@ -85,7 +92,7 @@ export const Form = () => {
           </Flex>
         </form>
       </motion.div>
-      {madlibReady && <Button onClick={() => setMadlibReady(false)}>{t('project.back')}</Button>}
+      {madlibReady && <Button onClick={handleReset}>{t('project.back')}</Button>}
     </>
   );
 };
