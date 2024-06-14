@@ -5,6 +5,132 @@ export const madlibStructure: MadlibPart[] = [
   {
     id: nanoid(11),
     type: 'heading',
+    value: 'Customize your prompt',
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value:
+      'I heard the Canadian government is running a public policy consultation aimed at regulating AI in Canada.',
+  },
+  {
+    id: nanoid(11),
+    type: 'text', //
+    value: 'I need help crafting a letter to participate in this consultation.',
+  },
+  {
+    id: nanoid(11),
+    type: 'text', //
+    value: 'My name is',
+  },
+  {
+    id: nanoid(11),
+    type: 'input',
+    name: 'person_name',
+    placeholder: 'insert name',
+    value: '',
+  },
+  { id: nanoid(11), type: 'text', value: '.' },
+  { id: nanoid(11), type: 'text', value: 'I am a' },
+  {
+    id: nanoid(11),
+    type: 'input',
+    name: 'age',
+    placeholder: 'insert age',
+    value: '',
+  },
+  { id: nanoid(11), type: 'text', value: 'years old' },
+  {
+    id: nanoid(11),
+    type: 'input',
+    name: 'profession',
+    placeholder: 'insert profession',
+    value: '',
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value: 'from',
+  },
+  {
+    id: nanoid(11),
+    type: 'input',
+    name: 'location',
+    placeholder: 'insert location',
+    value: '',
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value: '.',
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value: 'I am',
+  },
+  {
+    id: nanoid(11),
+    type: 'input',
+    name: 'emotion',
+    placeholder: 'insert emotion or feeling',
+    value: '',
+  },
+  { id: nanoid(11), type: 'input', name: 'issue1', placeholder: 'issue', value: '' },
+  { id: nanoid(11), type: 'text', value: 'and' },
+  { id: nanoid(11), type: 'input', name: 'issue2', placeholder: 'issue', value: '' },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value: '.',
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value:
+      'Please draft a letter to the committee chair using these details and expressing how Canada should regulate AI accordingly.',
+  },
+  {
+    id: nanoid(11),
+    type: 'heading',
+    value: 'Customize your writing style ',
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value: 'Please write in a',
+  },
+  {
+    id: nanoid(11),
+    type: 'select',
+    name: 'tone',
+    options: ['humble', 'respectful', 'civil', 'concerned', 'aggressive'],
+    value: 'respectful',
+  },
+  { id: nanoid(11), type: 'text', value: 'tone and in a' },
+  {
+    id: nanoid(11),
+    type: 'select',
+    name: 'tone',
+    options: ['formal', 'informal', 'academic', 'slang', 'polite', 'silly'],
+    value: 'formal',
+  },
+  { id: nanoid(11), type: 'text', value: 'style.' },
+  { id: nanoid(11), type: 'text', value: 'The letter should contain at least' },
+  {
+    id: nanoid(11),
+    type: 'select',
+    name: 'size',
+    options: ['1', '2', '3', '4', '5'],
+    value: '3',
+  },
+  { id: nanoid(11), type: 'text', value: 'paragraphs.' },
+];
+
+export const madlibStructureV1: MadlibPart[] = [
+  {
+    id: nanoid(11),
+    type: 'heading',
     value: 'Introduction ',
   },
   { id: nanoid(11), type: 'text', value: 'My name is' },
