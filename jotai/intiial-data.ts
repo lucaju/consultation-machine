@@ -76,6 +76,11 @@ export const madlibStructureEN: MadlibPart[] = [
     placeholder: 'insert emotion or feeling',
     value: '',
   },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value: 'about the use of AI for',
+  },
   { id: nanoid(11), type: 'input', name: 'issue1', placeholder: 'issue', value: '' },
   { id: nanoid(11), type: 'text', value: 'and' },
   { id: nanoid(11), type: 'input', name: 'issue2', placeholder: 'issue', value: '' },
@@ -290,7 +295,7 @@ export const madlibStructureV1: MadlibPart[] = [
     placeholder: 'insert age',
     value: '',
   },
-  { id: nanoid(11), type: 'text', value: 'years old' },
+  { id: nanoid(11), type: 'text', value: 'year old' },
   {
     id: nanoid(11),
     type: 'input',
