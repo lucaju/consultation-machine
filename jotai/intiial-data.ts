@@ -1,7 +1,7 @@
 import { MadlibPart } from '@/types';
 import { nanoid } from 'nanoid';
 
-export const madlibStructure: MadlibPart[] = [
+export const madlibStructureEN: MadlibPart[] = [
   {
     id: nanoid(11),
     type: 'heading',
@@ -93,7 +93,7 @@ export const madlibStructure: MadlibPart[] = [
   {
     id: nanoid(11),
     type: 'heading',
-    value: 'Customize your writing style ',
+    value: 'Customize your writing style',
   },
   {
     id: nanoid(11),
@@ -125,6 +125,147 @@ export const madlibStructure: MadlibPart[] = [
     value: '3',
   },
   { id: nanoid(11), type: 'text', value: 'paragraphs.' },
+];
+
+export const madlibStructureFR: MadlibPart[] = [
+  {
+    id: nanoid(11),
+    type: 'heading',
+    value: 'Personnalisez votre demande',
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value:
+      "J'ai entendu dire que le gouvernement canadien menait une consultation de politique publique visant à réglementer l'IA au Canada.",
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value: "J'ai besoin d'aide pour rédiger une lettre pour participer à cette consultation.",
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value: "Je m'appelle",
+  },
+  {
+    id: nanoid(11),
+    type: 'input',
+    name: 'person_name',
+    placeholder: 'insérez votre nom',
+    value: '',
+  },
+  { id: nanoid(11), type: 'text', value: '.' },
+  { id: nanoid(11), type: 'text', value: "J'ai" },
+  {
+    id: nanoid(11),
+    type: 'input',
+    name: 'age',
+    placeholder: 'insérez votre âge',
+    value: '',
+  },
+  { id: nanoid(11), type: 'text', value: 'ans et je suis' },
+  {
+    id: nanoid(11),
+    type: 'input',
+    name: 'profession',
+    placeholder: 'insérez votre profession',
+    value: '',
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value: 'de',
+  },
+  {
+    id: nanoid(11),
+    type: 'input',
+    name: 'location',
+    placeholder: 'insérez la ville où vous résidez',
+    value: '',
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value: '.',
+  },
+  {
+    id: nanoid(11),
+    type: 'select',
+    name: 'emotion_',
+    options: ['Je suis', "J'ai"],
+    value: 'Je suis',
+  },
+  {
+    id: nanoid(11),
+    type: 'input',
+    name: 'emotion',
+    placeholder: 'insérez une émotion ou un sentiment',
+    value: '',
+  },
+  { id: nanoid(11), type: 'text', value: "par rapport à l'utilisation de l'IA pour" },
+  {
+    id: nanoid(11),
+    type: 'input',
+    name: 'issue1',
+    placeholder: 'insérez un problème ou un sujet',
+    value: '',
+  },
+  { id: nanoid(11), type: 'text', value: 'and' },
+  {
+    id: nanoid(11),
+    type: 'input',
+    name: 'issue2',
+    placeholder: 'insérez un problème ou un sujet',
+    value: '',
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value: '.',
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value:
+      "Veuillez rédiger une lettre au président du comité en utilisant ces détails et en expliquant comment le Canada devrait réglementer l'IA en conséquence.",
+  },
+  {
+    id: nanoid(11),
+    type: 'heading',
+    value: "Personnalisez votre style d'écriture",
+  },
+  {
+    id: nanoid(11),
+    type: 'text',
+    value: 'Veuillez écrire sur le ton',
+  },
+  {
+    id: nanoid(11),
+    type: 'select',
+    name: 'tone',
+    options: ['humble', 'respectueux', 'civil', 'concerné', 'agressif'],
+    value: 'respectueux',
+  },
+  { id: nanoid(11), type: 'text', value: 'et dans un style' },
+  {
+    id: nanoid(11),
+    type: 'select',
+    name: 'tone',
+    options: ['officiel', 'informel', 'académique', 'argot', 'poli', 'cocasse'],
+    value: 'officiel',
+  },
+  { id: nanoid(11), type: 'text', value: 'style.' },
+  { id: nanoid(11), type: 'text', value: 'La lettre doit contenir au moins' },
+  {
+    id: nanoid(11),
+    type: 'select',
+    name: 'size',
+    options: ['1', '2', '3', '4', '5'],
+    value: '3',
+  },
+  { id: nanoid(11), type: 'text', value: 'paragraphes.' },
 ];
 
 export const madlibStructureV1: MadlibPart[] = [

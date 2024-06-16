@@ -4,10 +4,13 @@ import { llmResultAtom, madlibAtom } from '@/jotai/store';
 import { Box, Button, Section, Text } from '@radix-ui/themes';
 import { format } from 'date-fns';
 import { useAtomValue } from 'jotai';
+import { useTranslations } from 'next-intl';
 import { useCallback, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 
 export const Letter = () => {
+  const t = useTranslations();
+
   const llmResult = useAtomValue(llmResultAtom);
   const madlib = useAtomValue(madlibAtom);
 
@@ -46,32 +49,31 @@ export const Letter = () => {
         backgroundColor: 'var(--gray-a2)',
         borderRadius: 'var(--radius-3)',
         boxShadow: 'var(--shadow-4)',
-        // transform: 'rotate(-1deg)',
-        width: 800,
+        width: 1000,
       }}
       minWidth="600"
     >
       <Button onClick={handlePrint}>print</Button>
-      <Section py="3" style={{ width: 330 }}>
+      <Section py="3" style={{ width: 400 }}>
         <Text as="p" style={{ marginBottom: 16 }}>
           {personName}
         </Text>
         <Text as="p" weight="bold" style={{ marginBottom: 16 }}>
-          BUSINESS CONFIDENTIAL
+          {t('project.BUSINESS CONFIDENTIAL')}
         </Text>
         <Text as="p" style={{ marginBottom: 16 }}>
           {today}
         </Text>
         <Text as="p" style={{ marginBottom: 16 }}>
-          <Text>The Honourable Joël Lightbound, M.P.</Text>
+          <Text>{t('project.The Honourable Joel Lightbound MP')}</Text>
           <br />
-          <Text>Chair, House of Commons Standing</Text>
+          <Text>{t('project.Chair House of Commons Standing')}</Text>
           <br />
-          <Text>Committee on Industry and Technology</Text>
+          <Text>{t('project.Committee on Industry and Technology')}</Text>
           <br />
-          <Text>House of Commons</Text>
+          <Text>{t('project.House of Commons')}</Text>
           <br />
-          <Text>Ottawa, Ontario K1A 0A6</Text>
+          <Text>{t('project.Ottawa Ontario K1A 0A6')}</Text>
         </Text>
       </Section>
 

@@ -1,7 +1,13 @@
 {
   "project": {
+    "BUSINESS CONFIDENTIAL": "COMMERCE CONFIDENTIEL",
+    "Chair House of Commons Standing": "Président, Chambre des communes, Debout",
+    "Committee on Industry and Technology": "Commission de l'industrie et de la technologie",
     "English": "Anglais",
     "French": "Français",
+    "House of Commons": "Chambre des communes",
+    "Ottawa Ontario K1A 0A6": "Ottawa (Ontario) K1A 0A6",
+    "The Honourable Joel Lightbound MP": "L'honorable Joël Lightbound, député",
     "back": "retour",
     "by": "par",
     "create letter": "Créer une lettre",
