@@ -1,7 +1,7 @@
 'use client';
 
 import { llmResultAtom, madlibAtom, madlibReadyAtom } from '@/jotai/store';
-import { fetchOpenAi } from '@/server-actions';
+import { fetchOllama } from '@/server-actions';
 import { Button, Flex, Spinner, Text } from '@radix-ui/themes';
 import { useAtom, useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
@@ -19,43 +19,38 @@ export const LLM = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isHover, setIsHover] = useState(false);
 
+  const concatenaedMadlib = madlib
+    .map((item, index, madlib) => {
+      if (item.type === 'text') return item.value.trim();
+      if (item.type === 'heading') return ` ${item.value.trim()}. `;
+
+      let string = '';
+      string += madlib[index - 1].value.endsWith(' ') ? '' : ' ';
+      string += item.value.trim();
+      string += madlib[index + 1].value.startsWith('.') ? '' : ' ';
+      return string;
+    })
+    .join('');
+
   const handleSubmiit: MouseEventHandler<HTMLButtonElement> = async (event) => {
     setIsLoading(true);
     setError(false);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const model = event.shiftKey ? 'gpt-4o' : 'gpt-3.5-turbo';
 
-    const prompt = madlib
-      .filter((item) => {
-        if (item.type === 'input' && item.name === 'person_name') return false;
-        return true;
-      })
-      .map((item, index, madlib) => {
-        if (item.type === 'text') return item.value.trim();
-        if (item.type === 'heading') {
-          return ` ${item.value.trim()}. `;
-        }
+    const prompt = concatenaedMadlib;
 
-        let string = '';
-        string += madlib[index - 1].value.endsWith(' ') ? '' : ' ';
-        string += item.value.trim();
-        string += madlib[index + 1].value.startsWith('.') ? '' : ' ';
-        return string;
-      })
-      .join('');
-
-    const response = await fetchOpenAi(prompt, model);
+    // const modelResponse = await fetchOpenAi(prompt, model);
+    const modelResponse = await fetchOllama(prompt);
     setIsLoading(false);
 
-    if (!response) {
+    if (!modelResponse) {
       setError(true);
       return;
     }
 
-    // console.log(response);
-
-    const content = response.choices[0].message.content;
-    setLlmResult(content);
+    setLlmResult(modelResponse.content);
   };
 
   return (
@@ -65,14 +60,13 @@ export const LLM = () => {
           <Button
             color={isHover ? 'plum' : 'iris'}
             disabled={isLoading}
-            onClick={handleSubmiit}
-            onMouseMove={(event) => {
-              if (event.shiftKey) setIsHover(true);
-            }}
+            onPointerDown={handleSubmiit}
+            onMouseMove={(event) => event.shiftKey && setIsHover(true)}
             onMouseOut={() => setIsHover(false)}
+            style={{ cursor: 'pointer' }}
           >
             {isLoading && <Spinner loading />}
-            {t('project.create letter')}
+            {t('project.generate letter')}
           </Button>
           {error && <Text color="red">{t('project.something went wrong')}</Text>}
         </Flex>

@@ -1,20 +1,33 @@
 'use client';
 
-import { llmResultAtom, madlibAtom } from '@/jotai/store';
+import {
+  // letterAtom,
+  llmResultAtom,
+  madlibAtom,
+} from '@/jotai/store';
 import { Box, Button, Flex, Heading, Section, Text, Tooltip } from '@radix-ui/themes';
 import { format } from 'date-fns';
-import { useAtomValue } from 'jotai';
+import {
+  useAtomValue,
+  // useSetAtom
+} from 'jotai';
 import { useTranslations } from 'next-intl';
 import { useCallback, useRef, useState } from 'react';
 import { LiaCheckSolid, LiaEdit } from 'react-icons/lia';
 import { PiCopySimple, PiPrinter } from 'react-icons/pi';
 import { useReactToPrint } from 'react-to-print';
+import './style.css';
+import { useRouter } from '@/app/navigation';
+import { addNewContributionToDb } from '@/server-actions';
 
 export const Letter = () => {
   const t = useTranslations();
 
+  const router = useRouter();
+
   const llmResult = useAtomValue(llmResultAtom);
   const madlib = useAtomValue(madlibAtom);
+  // const setLetter = useSetAtom(letterAtom);
 
   const componentRef = useRef<HTMLDivElement | null>(null);
 
@@ -37,7 +50,7 @@ export const Letter = () => {
 
   const handlePrint = useReactToPrint({
     content: reactToPrintContent,
-    documentTitle: 'AwesomeFileName',
+    documentTitle: 'Consultation Letter',
     // onBeforeGetContent: handleOnBeforeGetContent,
     // onBeforePrint: handleBeforePrint,
     // onAfterPrint: handleAfterPrint,
@@ -67,27 +80,60 @@ export const Letter = () => {
     setEditable(!editable);
   };
 
+  const handleSubmit = async () => {
+    if (!componentRef.current) return;
+
+    const text = componentRef.current.innerHTML ?? '';
+
+    const newContribution = await addNewContributionToDb(text);
+
+    // setLetter(text);
+
+    router.push(`/contributions?id=${newContribution.id}`);
+  };
+
   return (
     <Flex direction="column" gap="2" align="center">
       <Heading size="3">{t('project.Letter')}</Heading>
-      <Flex direction="row" justify="end" gap="2">
-        <Tooltip content={t('project.Edit')}>
-          <Button color="gray" onClick={handleEditable} variant="outline">
-            {editable ? <LiaCheckSolid /> : <LiaEdit />}
-          </Button>
-        </Tooltip>
-        <Tooltip content={t('project.Copy')}>
-          <Button color="gray" onClick={handleCopy} variant="outline">
-            <PiCopySimple />
-          </Button>
-        </Tooltip>
-        <Tooltip content={t('project.Print')}>
-          <Button color="gray" onClick={handlePrint} variant="outline">
-            <PiPrinter />
-          </Button>
-        </Tooltip>
+      <Flex direction="row" justify="between" width="100%" gap="2">
+        <Flex direction="row" justify="end" gap="2">
+          <Tooltip content={t('project.Edit')}>
+            <Button
+              color="gray"
+              onClick={handleEditable}
+              style={{ cursor: 'pointer' }}
+              variant="outline"
+            >
+              {editable ? <LiaCheckSolid /> : <LiaEdit />}
+            </Button>
+          </Tooltip>
+          <Tooltip content={t('project.Copy')}>
+            <Button
+              color="gray"
+              onClick={handleCopy}
+              style={{ cursor: 'pointer' }}
+              variant="outline"
+            >
+              <PiCopySimple />
+            </Button>
+          </Tooltip>
+          <Tooltip content={t('project.Print')}>
+            <Button
+              color="gray"
+              onClick={handlePrint}
+              style={{ cursor: 'pointer' }}
+              variant="outline"
+            >
+              <PiPrinter />
+            </Button>
+          </Tooltip>
+        </Flex>
+        <Button onClick={handleSubmit} style={{ cursor: 'pointer' }} variant="solid">
+          {t('project.Submit')}
+        </Button>
       </Flex>
       <Box
+        id="letter"
         ref={componentRef}
         p="5"
         px="9"
@@ -98,12 +144,13 @@ export const Letter = () => {
           width: 1000,
           borderWidth: 1,
           borderStyle: 'solid',
-          borderColor: editable ? 'var(--iris-10)' : 'var(--gray-a3)',
+          borderColor: editable ? 'var(--iris-10)' : 'transparent',
         }}
         minWidth="600"
         contentEditable={editable ? 'plaintext-only' : 'false'}
+        suppressContentEditableWarning={true}
       >
-        <Section py="3" style={{ width: 400 }}>
+        <Section py="3" style={{ width: 600 }}>
           <Text as="p" style={{ marginBottom: 16 }}>
             {personName}
           </Text>

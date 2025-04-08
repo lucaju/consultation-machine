@@ -75,6 +75,7 @@ export const madlibStructureEN: MadlibPart[] = [
     name: 'emotion',
     placeholder: 'insert emotion or feeling',
     value: '',
+    minWidth: 175,
   },
   {
     id: nanoid(11),

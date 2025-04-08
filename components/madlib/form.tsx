@@ -61,6 +61,9 @@ export const Form = () => {
                   name={item.name}
                   defaultValue={item.value}
                   placeholder={item.placeholder}
+                  style={{
+                    minWidth: item.placeholder ? item.placeholder.length * 7 : (item.minWidth ?? 0),
+                  }}
                 />
               ) : item.type === 'select' ? (
                 <SelectInput
@@ -96,11 +99,17 @@ export const Form = () => {
           </Box>
 
           <Flex direction="column" m="4" width="600" align="center">
-            <Button type="submit">{t('project.create prompt')}</Button>
+            <Button type="submit" style={{ cursor: 'pointer' }}>
+              {t('project.create prompt')}
+            </Button>
           </Flex>
         </form>
       </motion.div>
-      {madlibReady && <Button onClick={handleReset}>{t('project.back')}</Button>}
+      {madlibReady && (
+        <Button onClick={handleReset} style={{ cursor: 'pointer' }}>
+          {t('project.back')}
+        </Button>
+      )}
     </>
   );
 };
