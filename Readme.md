@@ -20,9 +20,11 @@ Download and install NodeJS from its website: https://nodejs.org/en
 Clone or download this branch (use-ollama) to your computer:
 https://github.com/lucaju/consultation-machine/tree/use-ollama
 
-On the termina, navigate to the folder where the code is located.
+On the terminal, navigate to the folder where the code is located.
 Install dependencies: `npm install`
 Build the code: `npm run build`
+
+5. Run it
 Run it: `npm start`
 
 The project will be availale at http://localhost:3000
