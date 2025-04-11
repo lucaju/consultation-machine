@@ -30,9 +30,11 @@
     "back": "Back",
     "by": "by",
     "create prompt": "Create Prompt",
+    "generate": "Generate",
     "generate letter": "Generate letter",
     "language selector": "{locale, select, en {English} fr {Français} other {Unknown}}",
     "something went wrong": "Something went wrong",
+    "restart": "Restart",
     "title": "Consultation Machine"
   },
   "prompt": {

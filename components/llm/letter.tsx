@@ -3,22 +3,27 @@
 import {
   // letterAtom,
   llmResultAtom,
-  madlibAtom,
+  madlibReadyAtom,
 } from '@/jotai/store';
-import { Box, Button, Flex, Heading, Section, Text, Tooltip } from '@radix-ui/themes';
-import { format } from 'date-fns';
 import {
-  useAtomValue,
-  // useSetAtom
-} from 'jotai';
+  Box,
+  Button,
+  Flex,
+  //Heading,
+  Section,
+  Text,
+  Tooltip,
+} from '@radix-ui/themes';
+// import { format } from 'date-fns';
+import { useRouter } from '@/app/navigation';
+// import { addNewContributionToDb } from '@/server-actions';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { useCallback, useRef, useState } from 'react';
 import { LiaCheckSolid, LiaEdit } from 'react-icons/lia';
 import { PiCopySimple, PiPrinter } from 'react-icons/pi';
 import { useReactToPrint } from 'react-to-print';
 import './style.css';
-import { useRouter } from '@/app/navigation';
-import { addNewContributionToDb } from '@/server-actions';
 
 export const Letter = () => {
   const t = useTranslations();
@@ -26,17 +31,19 @@ export const Letter = () => {
   const router = useRouter();
 
   const llmResult = useAtomValue(llmResultAtom);
-  const madlib = useAtomValue(madlibAtom);
+  // const madlib = useAtomValue(madlibAtom);
   // const setLetter = useSetAtom(letterAtom);
+  const setLlmResult = useSetAtom(llmResultAtom);
+  const setMadlibReady = useSetAtom(madlibReadyAtom);
 
   const componentRef = useRef<HTMLDivElement | null>(null);
 
   const [editable, setEditable] = useState(false);
 
-  const personNameItem = madlib.find((item) => 'name' in item && item.name === 'person_name');
-  const personName = personNameItem?.value ?? 'Anonymous';
+  // const personNameItem = madlib.find((item) => 'name' in item && item.name === 'person_name');
+  // const personName = personNameItem?.value ?? 'Anonymous';
 
-  const today = format(new Date(), 'MMM dd, yyyy');
+  // const today = format(new Date(), 'MMM dd, yyyy');
 
   const parseText = llmResult
     ?.trim()
@@ -80,21 +87,27 @@ export const Letter = () => {
     setEditable(!editable);
   };
 
-  const handleSubmit = async () => {
-    if (!componentRef.current) return;
+  // const handleSubmit = async () => {
+  //   if (!componentRef.current) return;
 
-    const text = componentRef.current.innerHTML ?? '';
+  //   const text = componentRef.current.innerHTML ?? '';
 
-    const newContribution = await addNewContributionToDb(text);
+  //   const newContribution = await addNewContributionToDb(text);
 
-    // setLetter(text);
+  //   // setLetter(text);
 
-    router.push(`/contributions?id=${newContribution.id}`);
+  //   router.push(`/contributions?id=${newContribution.id}`);
+  // };
+
+  const handleRestart = () => {
+    setMadlibReady(false);
+    setLlmResult(null);
+    router.push('/');
   };
 
   return (
     <Flex direction="column" gap="2" align="center">
-      <Heading size="3">{t('project.Letter')}</Heading>
+      {/* <Heading size="3">{t('project.Letter')}</Heading> */}
       <Flex direction="row" justify="between" width="100%" gap="2">
         <Flex direction="row" justify="end" gap="2">
           <Tooltip content={t('project.Edit')}>
@@ -128,9 +141,9 @@ export const Letter = () => {
             </Button>
           </Tooltip>
         </Flex>
-        <Button onClick={handleSubmit} style={{ cursor: 'pointer' }} variant="solid">
+        {/* <Button onClick={handleSubmit} style={{ cursor: 'pointer' }} variant="solid">
           {t('project.Submit')}
-        </Button>
+        </Button> */}
       </Flex>
       <Box
         id="letter"
@@ -150,40 +163,17 @@ export const Letter = () => {
         contentEditable={editable ? 'plaintext-only' : 'false'}
         suppressContentEditableWarning={true}
       >
-        <Section py="3" style={{ width: 600 }}>
-          <Text as="p" style={{ marginBottom: 16 }}>
-            {personName}
-          </Text>
-          <Text as="p" weight="bold" style={{ marginBottom: 16 }}>
-            {t('project.BUSINESS CONFIDENTIAL')}
-          </Text>
-          <Text as="p" style={{ marginBottom: 16 }}>
-            {today}
-          </Text>
-          <Text as="p" style={{ marginBottom: 16 }}>
-            <Text>{t('project.The Honourable Joel Lightbound MP')}</Text>
-            <br />
-            <Text>{t('project.Chair House of Commons Standing')}</Text>
-            <br />
-            <Text>{t('project.Committee on Industry and Technology')}</Text>
-            <br />
-            <Text>{t('project.House of Commons')}</Text>
-            <br />
-            <Text>{t('project.Ottawa Ontario K1A 0A6')}</Text>
-          </Text>
-        </Section>
-
         <Section py="3">
           {parseText?.map((item, index) => (
             <Text as="p" key={index} style={{ marginBottom: 16 }}>
               {item}
             </Text>
           ))}
-          <Text as="p" style={{ marginBottom: 16 }}>
-            {personName}
-          </Text>
         </Section>
       </Box>
+      <Button onClick={handleRestart} style={{ cursor: 'pointer' }} variant="solid">
+        {t('project.restart')}
+      </Button>
     </Flex>
   );
 };

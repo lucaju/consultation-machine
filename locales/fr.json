@@ -30,9 +30,11 @@
     "back": "retour",
     "by": "par",
     "create prompt": "Créer une invite",
+    "generate": "Générer",
     "generate letter": "Générer une lettre",
     "language selector": "{locale, select, en {English} fr {Français} other {Unknown}}",
     "something went wrong": "Quelque chose n'a pas fonctionné",
+    "restart": "Redémarrage",
     "title": "Appareil de consultation"
   },
   "prompt": {
