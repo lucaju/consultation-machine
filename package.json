@@ -10,7 +10,7 @@
   "license": "MIT",
   "main": "index.js",
   "engines": {
-    "node": ">=24"
+    "node": ">=26"
   },
   "scripts": {
     "cm": "git-cz",

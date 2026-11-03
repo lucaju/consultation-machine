@@ -41,4 +41,3 @@
    ```
    LLM_PROVIDER=ollama
    ```
-
