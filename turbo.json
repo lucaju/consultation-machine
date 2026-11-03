@@ -1,7 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["NODE_ENV", "PORT", "OPENAI_API_KEY"],
+  "globalEnv": ["NODE_ENV", "PORT", "OPEN_ROUTER_API_KEY", "OPEN_ROUTER_MODEL", "LLM_PROVIDER"],
   "tasks": {
     "clean": {
       "cache": false

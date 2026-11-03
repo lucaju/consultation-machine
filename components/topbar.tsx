@@ -1,6 +1,6 @@
 import { Flex, Heading } from '@radix-ui/themes';
-import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { LanguageSelector } from './language-selector';
 
 export const Topbar = () => {

@@ -1,5 +1,5 @@
-import { MadlibPart } from '@/types';
 import { nanoid } from 'nanoid';
+import type { MadlibPart } from '@/types';
 
 export const madlibStructureEN: MadlibPart[] = [
   {
@@ -75,6 +75,7 @@ export const madlibStructureEN: MadlibPart[] = [
     name: 'emotion',
     placeholder: 'insert emotion or feeling',
     value: '',
+    minWidth: 175,
   },
   {
     id: nanoid(11),

@@ -15,6 +15,7 @@ type MadlibInput = {
   type: 'input';
   name: string;
   placeholder?: string;
+  minWidth?: number;
 } & MadlibCommon;
 
 type MadlibSelect = {
@@ -24,3 +25,14 @@ type MadlibSelect = {
 } & MadlibCommon;
 
 export type MadlibPart = MadlibHeading | MadlibText | MadlibInput | MadlibSelect;
+
+/// ------
+
+export type ContributionData = {
+  id: string;
+  date: string;
+  content: string;
+  summary?: string;
+  sentiment?: string;
+  policyDraft?: string;
+};

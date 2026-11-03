@@ -1,8 +1,8 @@
 'use client';
 
-import { madlibAtom } from '@/jotai/store';
 import { Box, Flex, Heading, Text } from '@radix-ui/themes';
 import { useAtomValue } from 'jotai';
+import { madlibAtom } from '@/jotai/store';
 
 export const Result = () => {
   const madlib = useAtomValue(madlibAtom);
