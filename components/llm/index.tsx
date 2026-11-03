@@ -5,7 +5,7 @@ import { useAtom, useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { type MouseEventHandler, useState } from 'react';
 import { llmResultAtom, madlibAtom, madlibReadyAtom } from '@/jotai/store';
-import { fetchOllama } from '@/server-actions';
+import { fetchLlm } from '@/server-actions';
 import { Letter } from './letter';
 
 export const LLM = () => {
@@ -38,7 +38,7 @@ export const LLM = () => {
 
     const prompt = concatenaedMadlib;
 
-    const modelResponse = await fetchOllama(prompt);
+    const modelResponse = await fetchLlm(prompt);
     setIsLoading(false);
 
     if (!modelResponse) {

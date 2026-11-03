@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
 import { sentimentAllAtom, summaryAllAtom } from '@/jotai/store';
-import { fetchOllama, getDb, updateContributionToDb } from '@/server-actions';
+import { fetchLlm, getDb, updateContributionToDb } from '@/server-actions';
 import { stripHTMLTags } from '@/utils';
 import { Button } from './button';
 
@@ -33,10 +33,10 @@ export const SummaryAll = () => {
         const sanitizedText = stripHTMLTags(contribution.content);
 
         const summarizePrompt = `Summarize the following text in one paragraph: ${sanitizedText}`;
-        const summmarizeResponse = await fetchOllama(summarizePrompt);
+        const summmarizeResponse = await fetchLlm(summarizePrompt);
 
         const sentimentPrompt = `Classify the sentiment of the following text: ${sanitizedText}. It should be a single word.`;
-        const sentimentResponse = await fetchOllama(sentimentPrompt);
+        const sentimentResponse = await fetchLlm(sentimentPrompt);
 
         contributions.with(index, {
           ...contribution,
@@ -59,8 +59,8 @@ export const SummaryAll = () => {
     const sentimentPrompt = t('prompt.Classify the sentiment of the following text');
     const singleWordPrompt = t('prompt.It should be a single word');
 
-    const summmarizeResponse = await fetchOllama(`${summarizePrompt}: ${summaries}`);
-    const sentimentResponse = await fetchOllama(
+    const summmarizeResponse = await fetchLlm(`${summarizePrompt}: ${summaries}`);
+    const sentimentResponse = await fetchLlm(
       `${sentimentPrompt}: ${summaries}. ${singleWordPrompt}.`,
     );
 

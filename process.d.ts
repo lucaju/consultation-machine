@@ -1,5 +1,7 @@
 declare namespace NodeJS {
   export interface ProcessEnv {
-    OPENAI_API_KEY: string;
+    OPEN_ROUTER_API_KEY: string;
+    LLM_PROVIDER?: 'openrouter' | 'ollama';
+    OPEN_ROUTER_MODEL?: string;
   }
 }

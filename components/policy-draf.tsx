@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
 import { summaryAllAtom } from '@/jotai/store';
-import { fetchOllama } from '@/server-actions';
+import { fetchLlm } from '@/server-actions';
 import { Button } from './button';
 
 export const PolicyDraft = () => {
@@ -21,7 +21,7 @@ export const PolicyDraft = () => {
     const policyDraftPrompt = t('prompt.Create a policy draft considering the following text');
     const formatPrompt = t('prompt.It should be in markdown format');
 
-    const policyDraftResponse = await fetchOllama(
+    const policyDraftResponse = await fetchLlm(
       `${policyDraftPrompt}: ${summaryAll}. ${formatPrompt}.`,
     );
 

@@ -3,7 +3,7 @@ import { useAtom } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { contributionOpenedAtom } from '@/jotai/store';
-import { fetchOllama, updateContributionToDb } from '@/server-actions';
+import { fetchLlm, updateContributionToDb } from '@/server-actions';
 import type { ContributionData } from '@/types';
 import { stripHTMLTags } from '@/utils';
 import { Button } from '../button';
@@ -24,8 +24,8 @@ export const Summary = () => {
     const sentimentPrompt = t('prompt.Classify the sentiment of the following text');
     const singleWordPrompt = t('prompt.It should be a single word');
 
-    const summmarizeResponse = await fetchOllama(`${summarizePrompt}: ${sanitizedText}`);
-    const sentimentResponse = await fetchOllama(
+    const summmarizeResponse = await fetchLlm(`${summarizePrompt}: ${sanitizedText}`);
+    const sentimentResponse = await fetchLlm(
       `${sentimentPrompt}: ${sanitizedText}. ${singleWordPrompt}.`,
     );
 
