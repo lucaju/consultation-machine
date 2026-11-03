@@ -1,11 +1,12 @@
 'use client';
 
-import { Button, Flex, Spinner, Text } from '@radix-ui/themes';
+import { Flex, Spinner, Text } from '@radix-ui/themes';
 import { useAtom, useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { type MouseEventHandler, useState } from 'react';
 import { llmResultAtom, madlibAtom, madlibReadyAtom } from '@/jotai/store';
 import { fetchLlm } from '@/server-actions';
+import { Button } from '../button';
 import { Letter } from './letter';
 
 export const LLM = () => {
@@ -36,17 +37,22 @@ export const LLM = () => {
     setIsLoading(true);
     setError(false);
 
-    const prompt = concatenaedMadlib;
+    try {
+      const prompt = concatenaedMadlib;
 
-    const modelResponse = await fetchLlm(prompt);
-    setIsLoading(false);
+      const modelResponse = await fetchLlm(prompt);
 
-    if (!modelResponse) {
+      if (!modelResponse) {
+        setError(true);
+        return;
+      }
+
+      setLlmResult(modelResponse.content);
+    } catch {
       setError(true);
-      return;
+    } finally {
+      setIsLoading(false);
     }
-
-    setLlmResult(modelResponse.content);
   };
 
   return (
@@ -59,7 +65,6 @@ export const LLM = () => {
             onPointerDown={handleSubmiit}
             onMouseMove={(event) => event.shiftKey && setIsHover(true)}
             onMouseOut={() => setIsHover(false)}
-            style={{ cursor: 'pointer' }}
           >
             {isLoading && <Spinner loading />}
             {t('project.generate letter')}

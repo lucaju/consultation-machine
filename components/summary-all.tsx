@@ -20,54 +20,56 @@ export const SummaryAll = () => {
   const handleGenerate = async () => {
     setIsLoading(true);
 
-    const contributions = await getDb();
-    let summaries = '';
+    try {
+      const contributions = await getDb();
+      let summaries = '';
 
-    for (let index = 0; index < contributions.length; index++) {
-      const contribution = contributions[index];
-      setLoadingString(
-        `Processing contribution ${contribution.id}... (${index + 1}/${contributions.length})`,
-      );
+      for (let index = 0; index < contributions.length; index++) {
+        const contribution = contributions[index];
+        setLoadingString(
+          `Processing contribution ${contribution.id}... (${index + 1}/${contributions.length})`,
+        );
 
-      if (!contribution.summary) {
-        const sanitizedText = stripHTMLTags(contribution.content);
+        if (!contribution.summary) {
+          const sanitizedText = stripHTMLTags(contribution.content);
 
-        const summarizePrompt = `Summarize the following text in one paragraph: ${sanitizedText}`;
-        const summmarizeResponse = await fetchLlm(summarizePrompt);
+          const summarizePrompt = `Summarize the following text in one paragraph: ${sanitizedText}`;
+          const summmarizeResponse = await fetchLlm(summarizePrompt);
 
-        const sentimentPrompt = `Classify the sentiment of the following text: ${sanitizedText}. It should be a single word.`;
-        const sentimentResponse = await fetchLlm(sentimentPrompt);
+          const sentimentPrompt = `Classify the sentiment of the following text: ${sanitizedText}. It should be a single word.`;
+          const sentimentResponse = await fetchLlm(sentimentPrompt);
 
-        contributions.with(index, {
-          ...contribution,
-          summary: summmarizeResponse.content,
-          sentiment: sentimentResponse.content,
-        });
+          contributions.with(index, {
+            ...contribution,
+            summary: summmarizeResponse.content,
+            sentiment: sentimentResponse.content,
+          });
 
-        await updateContributionToDb(contribution.id, {
-          summary: summmarizeResponse.content,
-          sentiment: sentimentResponse.content,
-        });
+          await updateContributionToDb(contribution.id, {
+            summary: summmarizeResponse.content,
+            sentiment: sentimentResponse.content,
+          });
+        }
+
+        summaries += `${contribution.summary}\n`;
       }
 
-      summaries += `${contribution.summary}\n`;
+      setLoadingString('');
+
+      const summarizePrompt = t('prompt.Summarize the following text in one paragraph');
+      const sentimentPrompt = t('prompt.Classify the sentiment of the following text');
+      const singleWordPrompt = t('prompt.It should be a single word');
+
+      const summmarizeResponse = await fetchLlm(`${summarizePrompt}: ${summaries}`);
+      const sentimentResponse = await fetchLlm(
+        `${sentimentPrompt}: ${summaries}. ${singleWordPrompt}.`,
+      );
+
+      setSummaryAll(summmarizeResponse.content);
+      setSentimentAll(sentimentResponse.content);
+    } finally {
+      setIsLoading(false);
     }
-
-    setLoadingString('');
-
-    const summarizePrompt = t('prompt.Summarize the following text in one paragraph');
-    const sentimentPrompt = t('prompt.Classify the sentiment of the following text');
-    const singleWordPrompt = t('prompt.It should be a single word');
-
-    const summmarizeResponse = await fetchLlm(`${summarizePrompt}: ${summaries}`);
-    const sentimentResponse = await fetchLlm(
-      `${sentimentPrompt}: ${summaries}. ${singleWordPrompt}.`,
-    );
-
-    setSummaryAll(summmarizeResponse.content);
-    setSentimentAll(sentimentResponse.content);
-
-    setIsLoading(false);
   };
 
   return (

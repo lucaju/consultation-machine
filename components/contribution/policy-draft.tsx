@@ -19,21 +19,24 @@ export const PolicyDraft = () => {
   const handleGenerate = async () => {
     setIsLoading(true);
 
-    const sanitizedText = stripHTMLTags(contributionOpened?.content);
+    try {
+      const sanitizedText = stripHTMLTags(contributionOpened?.content);
 
-    const policyDraftPrompt = t('prompt.Create a policy draft considering the following text');
-    const formatPrompt = t('prompt.It should be in markdown format');
+      const policyDraftPrompt = t('prompt.Create a policy draft considering the following text');
+      const formatPrompt = t('prompt.It should be in markdown format');
 
-    const policyDraftResponse = await fetchLlm(
-      `${policyDraftPrompt}: ${sanitizedText}. ${formatPrompt}.`,
-    );
+      const policyDraftResponse = await fetchLlm(
+        `${policyDraftPrompt}: ${sanitizedText}. ${formatPrompt}.`,
+      );
 
-    console.log(policyDraftResponse);
+      console.log(policyDraftResponse);
 
-    await save({ policyDraft: policyDraftResponse.content });
+      await save({ policyDraft: policyDraftResponse.content });
 
-    setIsLoading(false);
-    console.log(policyDraftResponse);
+      console.log(policyDraftResponse);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const save = async ({ policyDraft }: Required<Pick<ContributionData, 'policyDraft'>>) => {

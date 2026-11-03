@@ -18,20 +18,22 @@ export const Summary = () => {
   const handleGenerate = async () => {
     setIsLoading(true);
 
-    const sanitizedText = stripHTMLTags(contributionOpened?.content);
+    try {
+      const sanitizedText = stripHTMLTags(contributionOpened?.content);
 
-    const summarizePrompt = t('prompt.Summarize the following text in one paragraph');
-    const sentimentPrompt = t('prompt.Classify the sentiment of the following text');
-    const singleWordPrompt = t('prompt.It should be a single word');
+      const summarizePrompt = t('prompt.Summarize the following text in one paragraph');
+      const sentimentPrompt = t('prompt.Classify the sentiment of the following text');
+      const singleWordPrompt = t('prompt.It should be a single word');
 
-    const summmarizeResponse = await fetchLlm(`${summarizePrompt}: ${sanitizedText}`);
-    const sentimentResponse = await fetchLlm(
-      `${sentimentPrompt}: ${sanitizedText}. ${singleWordPrompt}.`,
-    );
+      const summmarizeResponse = await fetchLlm(`${summarizePrompt}: ${sanitizedText}`);
+      const sentimentResponse = await fetchLlm(
+        `${sentimentPrompt}: ${sanitizedText}. ${singleWordPrompt}.`,
+      );
 
-    await save({ summary: summmarizeResponse.content, sentiment: sentimentResponse.content });
-
-    setIsLoading(false);
+      await save({ summary: summmarizeResponse.content, sentiment: sentimentResponse.content });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const save = async ({

@@ -18,15 +18,18 @@ export const PolicyDraft = () => {
   const handleGenerate = async () => {
     setIsLoading(true);
 
-    const policyDraftPrompt = t('prompt.Create a policy draft considering the following text');
-    const formatPrompt = t('prompt.It should be in markdown format');
+    try {
+      const policyDraftPrompt = t('prompt.Create a policy draft considering the following text');
+      const formatPrompt = t('prompt.It should be in markdown format');
 
-    const policyDraftResponse = await fetchLlm(
-      `${policyDraftPrompt}: ${summaryAll}. ${formatPrompt}.`,
-    );
+      const policyDraftResponse = await fetchLlm(
+        `${policyDraftPrompt}: ${summaryAll}. ${formatPrompt}.`,
+      );
 
-    setPolicy(policyDraftResponse.content);
-    setIsLoading(false);
+      setPolicy(policyDraftResponse.content);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
