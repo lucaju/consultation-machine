@@ -1,10 +1,10 @@
 'use client';
 
-import { usePathname, useRouter } from '@/app/navigation';
-import { locales, type Locales } from '@/i18n';
 import { Select } from '@radix-ui/themes';
 import { useLocale, useTranslations } from 'next-intl';
 import { startTransition } from 'react';
+import { usePathname, useRouter } from '@/app/navigation';
+import { type Locales, locales } from '@/i18n';
 
 export const LanguageSelector = () => {
   const locale = useLocale();

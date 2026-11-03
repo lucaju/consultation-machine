@@ -1,11 +1,11 @@
-import { sentimentAllAtom, summaryAllAtom } from '@/jotai/store';
-import { fetchOllama, getDb, updateContributionToDb } from '@/server-actions';
-import { stripHTMLTags } from '@/utils';
 import { Box, Flex, Heading } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
+import { sentimentAllAtom, summaryAllAtom } from '@/jotai/store';
+import { fetchOllama, getDb, updateContributionToDb } from '@/server-actions';
+import { stripHTMLTags } from '@/utils';
 import { Button } from './button';
 
 export const SummaryAll = () => {
@@ -50,7 +50,7 @@ export const SummaryAll = () => {
         });
       }
 
-      summaries += contribution.summary + '\n';
+      summaries += `${contribution.summary}\n`;
     }
 
     setLoadingString('');

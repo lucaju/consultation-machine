@@ -1,12 +1,12 @@
 'use client';
 
-import { useRouter } from '@/app/navigation';
-import { madlibStructureEN, madlibStructureFR } from '@/db/madlib/intiial-data';
-import { madlibAtom, madlibReadyAtom } from '@/jotai/store';
 import { Flex } from '@radix-ui/themes';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { useLocale, useTranslations } from 'next-intl';
 import { useEffect } from 'react';
+import { useRouter } from '@/app/navigation';
+import { madlibStructureEN, madlibStructureFR } from '@/db/madlib/intiial-data';
+import { madlibAtom, madlibReadyAtom } from '@/jotai/store';
 import { Button } from '../button';
 import { Form } from './form';
 import { Result } from './result';
@@ -21,9 +21,9 @@ export const Madlib = () => {
   const setMadlibReady = useSetAtom(madlibAtom);
   const madlibReady = useAtomValue(madlibReadyAtom);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: mount-only seed of madlib structure
   useEffect(() => {
     setMadlibReady(madlib);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleShowContributions = () => {

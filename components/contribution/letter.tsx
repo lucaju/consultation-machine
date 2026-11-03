@@ -1,6 +1,6 @@
-import { contributionOpenedAtom } from '@/jotai/store';
 import { Box } from '@radix-ui/themes';
 import { useAtomValue } from 'jotai';
+import { contributionOpenedAtom } from '@/jotai/store';
 
 export const Letter = () => {
   const contributionOpened = useAtomValue(contributionOpenedAtom);

@@ -1,8 +1,8 @@
 'use client';
 
-import { madlibAtom } from '@/jotai/store';
 import { TextField } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
+import { madlibAtom } from '@/jotai/store';
 
 export const TextInput = ({ id, name, onChange, style, ...props }: TextField.RootProps) => {
   const [madlib, setMadlib] = useAtom(madlibAtom);

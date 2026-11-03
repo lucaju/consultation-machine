@@ -1,14 +1,14 @@
-import { contributionOpenedAtom } from '@/jotai/store';
 import { Dialog, Flex, SegmentedControl, Text, VisuallyHidden } from '@radix-ui/themes';
+import { format } from 'date-fns';
 import { useAtom } from 'jotai';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { useRouter } from '@/app/navigation';
+import { contributionOpenedAtom } from '@/jotai/store';
 import { Button } from '../button';
 import { Letter } from './letter';
 import { PolicyDraft } from './policy-draft';
 import { Summary } from './summary';
-import { useRouter } from '@/app/navigation';
-import { format } from 'date-fns';
-import { useTranslations } from 'next-intl';
 
 export const Contribution = () => {
   const router = useRouter();
@@ -29,9 +29,13 @@ export const Contribution = () => {
     <Dialog.Root open={true} onOpenChange={handleOpenChange}>
       <Dialog.Content minWidth="1000px">
         <Dialog.Title style={{ textAlign: 'center' }}>
-          {t('project.Contribution')} #{contributionOpened!.id}
+          {t('project.Contribution')} #{contributionOpened?.id}
           <br />
-          <Text size="1">{format(new Date(contributionOpened!.date), 'dd/MM/yyyy HH:mm')}</Text>
+          <Text size="1">
+            {contributionOpened?.date
+              ? format(new Date(contributionOpened.date), 'dd/MM/yyyy HH:mm')
+              : ''}
+          </Text>
         </Dialog.Title>
         <VisuallyHidden asChild>
           <Dialog.Description>{t('project.Contribution details')}</Dialog.Description>

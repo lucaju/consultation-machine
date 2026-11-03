@@ -1,11 +1,11 @@
-import { contributionOpenedAtom } from '@/jotai/store';
-import { fetchOllama, updateContributionToDb } from '@/server-actions';
-import type { ContributionData } from '@/types';
-import { stripHTMLTags } from '@/utils';
 import { Box, Flex } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { contributionOpenedAtom } from '@/jotai/store';
+import { fetchOllama, updateContributionToDb } from '@/server-actions';
+import type { ContributionData } from '@/types';
+import { stripHTMLTags } from '@/utils';
 import { Button } from '../button';
 
 export const Summary = () => {
@@ -38,8 +38,9 @@ export const Summary = () => {
     summary,
     sentiment,
   }: Required<Pick<ContributionData, 'summary' | 'sentiment'>>) => {
-    await updateContributionToDb(contributionOpened!.id, { summary, sentiment });
-    setContributionOpened({ ...contributionOpened!, summary, sentiment });
+    if (!contributionOpened) return;
+    await updateContributionToDb(contributionOpened.id, { summary, sentiment });
+    setContributionOpened({ ...contributionOpened, summary, sentiment });
   };
 
   return (

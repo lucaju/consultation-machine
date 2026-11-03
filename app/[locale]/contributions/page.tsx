@@ -1,26 +1,31 @@
+import fs from 'node:fs';
+import { Container, Flex } from '@radix-ui/themes';
+import { getLocale } from 'next-intl/server';
 import { redirect } from '@/app/navigation';
 import { Contributions } from '@/components/contributions';
 import { Topbar } from '@/components/topbar';
-import { ContributionData } from '@/types';
-import { Container, Flex } from '@radix-ui/themes';
-import fs from 'fs';
+import type { ContributionData } from '@/types';
 
-export default function ContributionsPage({
+export default async function ContributionsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const contributionId = Array.isArray(searchParams.id) ? searchParams.id[0] : searchParams.id;
+  const locale = await getLocale();
+  const resolvedSearchParams = await searchParams;
+  const contributionId = Array.isArray(resolvedSearchParams.id)
+    ? resolvedSearchParams.id[0]
+    : resolvedSearchParams.id;
 
   const data = fs.readFileSync('./db/contributions/data.json', 'utf8');
   const jsonData = JSON.parse(data).reverse() as ContributionData[];
 
   const contribution = contributionId
-    ? jsonData.find((contribution) => contribution.id === contributionId)
+    ? jsonData.find((item) => item.id === contributionId)
     : undefined;
 
   if (contributionId && !contribution) {
-    redirect('/contributions');
+    redirect({ href: '/contributions', locale });
   }
 
   return (

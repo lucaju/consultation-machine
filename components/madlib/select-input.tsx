@@ -1,8 +1,8 @@
 'use client';
 
-import { madlibAtom } from '@/jotai/store';
 import { Select } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
+import { madlibAtom } from '@/jotai/store';
 
 interface Props extends Select.RootProps {
   id: string;
@@ -12,6 +12,7 @@ interface Props extends Select.RootProps {
 export const SelectInput = ({ id, name, onValueChange, options, ...props }: Props) => {
   const [madlib, setMadlib] = useAtom(madlibAtom);
 
+  // biome-ignore lint/style/noNonNullAssertion: we know the item exists
   const item = madlib.find((item) => item.id === id)!;
   const index = madlib.indexOf(item);
 

@@ -1,12 +1,12 @@
-import { contributionOpenedAtom } from '@/jotai/store';
-import { fetchOllama, updateContributionToDb } from '@/server-actions';
-import { ContributionData } from '@/types';
-import { stripHTMLTags } from '@/utils';
 import { Flex } from '@radix-ui/themes';
 import { useAtom } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
+import { contributionOpenedAtom } from '@/jotai/store';
+import { fetchOllama, updateContributionToDb } from '@/server-actions';
+import type { ContributionData } from '@/types';
+import { stripHTMLTags } from '@/utils';
 import { Button } from '../button';
 
 export const PolicyDraft = () => {
@@ -37,8 +37,9 @@ export const PolicyDraft = () => {
   };
 
   const save = async ({ policyDraft }: Required<Pick<ContributionData, 'policyDraft'>>) => {
-    await updateContributionToDb(contributionOpened!.id, { policyDraft });
-    setContributionOpened({ ...contributionOpened!, policyDraft });
+    if (!contributionOpened) return;
+    await updateContributionToDb(contributionOpened.id, { policyDraft });
+    setContributionOpened({ ...contributionOpened, policyDraft });
   };
 
   return (

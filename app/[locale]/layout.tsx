@@ -1,21 +1,15 @@
-import type { Locales } from '@/i18n';
 import { Theme } from '@radix-ui/themes';
-import '@radix-ui/themes/styles.css';
-import { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { ThemeProvider } from 'next-themes';
-// import { Libre_Caslon_Text } from 'next/font/google';
+import '@radix-ui/themes/styles.css';
+import type { Metadata } from 'next';
 import { Nunito_Sans } from 'next/font/google';
-import '../globals.css';
+import { notFound } from 'next/navigation';
+import { routing } from '@/i18n';
 import { JotaiProvider } from '@/providers/jotai-provider';
+import '../globals.css';
 
-// const Libre_Caslon = Libre_Caslon_Text({
-//   subsets: ['latin'],
-//   display: 'swap',
-//   variable: '--font-libre-caslon',
-//   weight: '400',
-// });
 const Nunito = Nunito_Sans({
   subsets: ['latin'],
   display: 'swap',
@@ -24,12 +18,13 @@ const Nunito = Nunito_Sans({
 });
 
 interface Props extends React.PropsWithChildren {
-  params: {
-    locale: Locales;
-  };
+  params: Promise<{
+    locale: string;
+  }>;
 }
 
-export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
   const t = await getTranslations({ locale });
   const title = t('project.title');
 
@@ -38,16 +33,17 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
   };
 }
 
-export default async function LocaleLayout({ children, params: { locale } }: Props) {
+export default async function LocaleLayout({ children, params }: Props) {
+  const { locale } = await params;
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
   const messages = await getMessages({ locale });
 
   return (
-    <html
-      // className={Libre_Caslon.className}
-      className={Nunito.className}
-      lang={locale}
-      suppressHydrationWarning={true}
-    >
+    <html className={Nunito.className} lang={locale} suppressHydrationWarning={true}>
       <body suppressHydrationWarning={true}>
         <NextIntlClientProvider messages={messages}>
           <JotaiProvider>

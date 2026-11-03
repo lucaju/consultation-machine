@@ -1,11 +1,11 @@
 'use client';
 
-import { llmResultAtom, madlibAtom, madlibReadyAtom } from '@/jotai/store';
-import { fetchOllama } from '@/server-actions';
 import { Button, Flex, Spinner, Text } from '@radix-ui/themes';
 import { useAtom, useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
-import { MouseEventHandler, useState } from 'react';
+import { type MouseEventHandler, useState } from 'react';
+import { llmResultAtom, madlibAtom, madlibReadyAtom } from '@/jotai/store';
+import { fetchOllama } from '@/server-actions';
 import { Letter } from './letter';
 
 export const LLM = () => {
@@ -32,16 +32,12 @@ export const LLM = () => {
     })
     .join('');
 
-  const handleSubmiit: MouseEventHandler<HTMLButtonElement> = async (event) => {
+  const handleSubmiit: MouseEventHandler<HTMLButtonElement> = async () => {
     setIsLoading(true);
     setError(false);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const model = event.shiftKey ? 'gpt-4o' : 'gpt-3.5-turbo';
-
     const prompt = concatenaedMadlib;
 
-    // const modelResponse = await fetchOpenAi(prompt, model);
     const modelResponse = await fetchOllama(prompt);
     setIsLoading(false);
 

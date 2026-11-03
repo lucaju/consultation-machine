@@ -1,66 +1,54 @@
 {
   "name": "consultation-machine",
   "version": "0.3.0",
-  "keywords": [
-    "prompt",
-    "generator"
-  ],
+  "keywords": ["prompt", "generator"],
   "description": "consultation-machine",
   "author": "Luciano Frizzera <lucaju@gmail.com> (luciano.fluxo.art.br)",
   "license": "MIT",
   "main": "index.js",
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "scripts": {
     "cm": "git-cz",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",
-    "format": "prettier . --write",
-    "dev": "next dev --turbo",
+    "format": "biome format --write .",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "biome check ."
   },
   "dependencies": {
-    "@radix-ui/themes": "^3.1.1",
-    "date-fns": "^3.6.0",
-    "framer-motion": "^11.3.21",
-    "jotai": "2.9.2",
-    "nanoid": "^5.0.7",
-    "next": "^14.2.5",
-    "next-intl": "^3.17.2",
-    "next-themes": "^0.3.0",
-    "ollama": "^0.5.6",
-    "openai": "^4.54.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-icons": "^5.2.1",
-    "react-markdown": "^9.0.1",
-    "react-to-print": "^2.15.1",
-    "tesseract.js": "^5.1.0",
-    "turbo": "^2.0.11",
-    "zod": "^3.23.8"
+    "@radix-ui/themes": "^3.3.0",
+    "date-fns": "^4.4.0",
+    "jotai": "^3.0.1",
+    "motion": "^14.9.0",
+    "nanoid": "^6.0.2",
+    "next": "^16.4.4",
+    "next-intl": "^4.14.9",
+    "next-themes": "^0.4.6",
+    "ollama": "^0.6.4",
+    "openai": "^7.47.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-icons": "^5.7.0",
+    "react-markdown": "^10.1.0",
+    "react-to-print": "^3.3.0",
+    "tesseract.js": "^7.0.0",
+    "turbo": "^2.11.10",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.7",
-    "@next/eslint-plugin-next": "^14.2.5",
+    "@biomejs/biome": "^2.6.4",
+    "@changesets/cli": "^3.0.3",
     "@types/file-saver": "^2.0.7",
-    "@types/node": "^22.1.0",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
-    "commitizen": "^4.3.0",
-    "eslint": "^8.57.0",
-    "eslint-config-next": "^14.2.5",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-config-turbo": "^2.0.11",
-    "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-react": "^7.35.0",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "commitizen": "^4.3.2",
     "git-cz": "^4.9.0",
-    "jotai-devtools": "^0.10.0",
-    "prettier": "^3.3.3",
-    "typescript": "^5.5.4"
+    "jotai-devtools": "^0.15.1",
+    "typescript": "^7.0.0"
   },
-  "packageManager": "npm@10.8.2"
+  "packageManager": "pnpm@11.24.0"
 }

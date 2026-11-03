@@ -1,7 +1,7 @@
 'use client';
 
-import { rootStore } from '@/jotai/store';
 import { Provider } from 'jotai';
+import { rootStore } from '@/jotai/store';
 // import { DevTools } from 'jotai-devtools';
 import 'jotai-devtools/styles.css';
 

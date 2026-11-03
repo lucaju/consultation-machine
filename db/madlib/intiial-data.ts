@@ -1,5 +1,5 @@
-import { MadlibPart } from '@/types';
 import { nanoid } from 'nanoid';
+import type { MadlibPart } from '@/types';
 
 export const madlibStructureEN: MadlibPart[] = [
   {

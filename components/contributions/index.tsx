@@ -1,15 +1,5 @@
 'use client';
 
-import { useRouter } from '@/app/navigation';
-import {
-  contributionOpenedAtom,
-  madlibReadyAtom,
-  // letterAtom,
-  // newContributionIdAtom,
-  summaryAllAtom,
-} from '@/jotai/store';
-// import { addNewContributionToDb } from '@/server-actions';
-import { ContributionData } from '@/types';
 import { Flex, Heading, Separator } from '@radix-ui/themes';
 import {
   useAtom,
@@ -19,6 +9,16 @@ import {
 } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
+import { useRouter } from '@/app/navigation';
+import {
+  contributionOpenedAtom,
+  madlibReadyAtom,
+  // letterAtom,
+  // newContributionIdAtom,
+  summaryAllAtom,
+} from '@/jotai/store';
+// import { addNewContributionToDb } from '@/server-actions';
+import type { ContributionData } from '@/types';
 import { Button } from '../button';
 import { Contribution } from '../contribution';
 import { PolicyDraft } from '../policy-draf';
@@ -49,12 +49,12 @@ export const Contributions = ({ data, selected }: Props) => {
   //   // setNewContributionId(newContribution.id);
   // };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: mount-only open of selected contribution
   useEffect(() => {
     // handleNewContribution();
     if (selected) {
       setContributionOpened(selected);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleAddContribution = () => {

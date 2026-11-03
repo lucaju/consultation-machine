@@ -1,7 +1,7 @@
-import { ContributionData } from '@/types';
 import { Table as TableRadix } from '@radix-ui/themes';
-import { Row } from './row';
 import { useTranslations } from 'next-intl';
+import type { ContributionData } from '@/types';
+import { Row } from './row';
 
 export const Table = ({ data }: { data: ContributionData[] }) => {
   const t = useTranslations();

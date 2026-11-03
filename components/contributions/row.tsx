@@ -1,14 +1,14 @@
-import { useRouter } from '@/app/navigation';
-import { contributionOpenedAtom, newContributionIdAtom } from '@/jotai/store';
-import { ContributionData } from '@/types';
 import { Table as TableRadix } from '@radix-ui/themes';
 import { format } from 'date-fns';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { useState } from 'react';
-import { MdOutlineNewReleases } from 'react-icons/md';
-import { Button } from '../button';
 // import { stripHTMLTags } from '@/utils';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import { MdOutlineNewReleases } from 'react-icons/md';
+import { useRouter } from '@/app/navigation';
+import { contributionOpenedAtom, newContributionIdAtom } from '@/jotai/store';
+import type { ContributionData } from '@/types';
+import { Button } from '../button';
 
 export const Row = ({ contribution }: { contribution: ContributionData }) => {
   const {

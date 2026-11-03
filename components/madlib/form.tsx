@@ -1,10 +1,10 @@
 'use client';
 
-import { llmResultAtom, madlibAtom, madlibReadyAtom } from '@/jotai/store';
 import { Box, Button, Flex, Heading, Text } from '@radix-ui/themes';
-import { motion } from 'framer-motion';
 import { useAtom, useSetAtom } from 'jotai';
+import { motion } from 'motion/react';
 import { useTranslations } from 'next-intl';
+import { llmResultAtom, madlibAtom, madlibReadyAtom } from '@/jotai/store';
 import { SelectInput } from './select-input';
 import { TextInput } from './text-input';
 

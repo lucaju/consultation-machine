@@ -1,10 +1,5 @@
 'use client';
 
-import {
-  // letterAtom,
-  llmResultAtom,
-  madlibAtom,
-} from '@/jotai/store';
 import { Box, Button, Flex, Heading, Section, Text, Tooltip } from '@radix-ui/themes';
 import { format } from 'date-fns';
 import {
@@ -12,10 +7,15 @@ import {
   // useSetAtom
 } from 'jotai';
 import { useTranslations } from 'next-intl';
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { LiaCheckSolid, LiaEdit } from 'react-icons/lia';
 import { PiCopySimple, PiPrinter } from 'react-icons/pi';
 import { useReactToPrint } from 'react-to-print';
+import {
+  // letterAtom,
+  llmResultAtom,
+  madlibAtom,
+} from '@/jotai/store';
 import './style.css';
 import { useRouter } from '@/app/navigation';
 import { addNewContributionToDb } from '@/server-actions';
@@ -43,18 +43,9 @@ export const Letter = () => {
     .replaceAll(/\[[^\]]*\]/g, '')
     .split('\n');
 
-  const reactToPrintContent = useCallback(() => {
-    return componentRef.current;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [componentRef.current]);
-
   const handlePrint = useReactToPrint({
-    content: reactToPrintContent,
+    contentRef: componentRef,
     documentTitle: 'Consultation Letter',
-    // onBeforeGetContent: handleOnBeforeGetContent,
-    // onBeforePrint: handleBeforePrint,
-    // onAfterPrint: handleAfterPrint,
-    removeAfterPrint: true,
   });
 
   const handleCopy = async () => {

@@ -1,7 +1,7 @@
 'use server';
 
-import { ContributionData } from '@/types';
-import fs from 'fs';
+import fs from 'node:fs';
+import type { ContributionData } from '@/types';
 // import { nanoid } from 'nanoid'
 
 export const getDb = async () => {

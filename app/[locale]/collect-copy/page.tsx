@@ -1,6 +1,6 @@
-import { Topbar } from '@/components/topbar';
-import { AddContribution } from '@/components/add-contribution';
 import { Container, Flex, Heading } from '@radix-ui/themes';
+import { AddContribution } from '@/components/add-contribution';
+import { Topbar } from '@/components/topbar';
 
 export default function CollectPage() {
   return (

@@ -1,10 +1,10 @@
-import { summaryAllAtom } from '@/jotai/store';
-import { fetchOllama } from '@/server-actions';
 import { Box, Flex, Heading } from '@radix-ui/themes';
 import { useAtomValue } from 'jotai';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import Markdown from 'react-markdown';
+import { summaryAllAtom } from '@/jotai/store';
+import { fetchOllama } from '@/server-actions';
 import { Button } from './button';
 
 export const PolicyDraft = () => {

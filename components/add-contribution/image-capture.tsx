@@ -14,13 +14,15 @@ export const ImageCapture = () => {
 
   const [webcamStream, setWebcamStream] = useState<MediaStream | null>(null);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: mount-only webcam lifecycle
   useEffect(() => {
     startWebcam();
     return () => {
-      webcamStream?.getTracks().forEach((track) => track.stop());
+      for (const track of webcamStream?.getTracks() ?? []) {
+        track.stop();
+      }
       setWebcamStream(null);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const startWebcam = async () => {
@@ -65,7 +67,9 @@ export const ImageCapture = () => {
         const dataUrl = canvas.toDataURL('image/jpeg');
         setImageCaptured(dataUrl);
 
-        webcamStream?.getTracks().forEach((track) => track.stop());
+        for (const track of webcamStream?.getTracks() ?? []) {
+          track.stop();
+        }
         setWebcamStream(null);
         setProcessStep('text-extraction');
       }, 100);
@@ -75,7 +79,9 @@ export const ImageCapture = () => {
   };
 
   const handleCancel = () => {
-    webcamStream?.getTracks().forEach((track) => track.stop());
+    for (const track of webcamStream?.getTracks() ?? []) {
+      track.stop();
+    }
     setWebcamStream(null);
     resetDialog();
   };

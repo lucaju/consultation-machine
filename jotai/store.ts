@@ -1,5 +1,5 @@
-import { ContributionData, MadlibPart } from '@/types';
 import { atom, createStore } from 'jotai';
+import type { ContributionData, MadlibPart } from '@/types';
 
 export const madlibAtom = atom<MadlibPart[]>([]);
 madlibAtom.debugLabel = 'madlib.Atom';
